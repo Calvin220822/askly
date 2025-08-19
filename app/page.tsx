@@ -1,16 +1,25 @@
-import Image from 'next/image';
+import Header from './components/Header';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <Image
-        className="dark:invert"
-        src="/logo.png"
-        alt="logo"
-        width={180}
-        height={38}
-        priority
-      />
+    <div className="font-sans min-h-screen">
+      <Header />
+      <div>
+        <h2>Agents</h2>
+        <div>
+          <div className="flex max-w-[420px] flex-col items-center justify-center gap-2">
+            <h2 className="font-semibold text-base text-primary sm:text-lg">
+              No agents yet..
+            </h2>
+            <p className="text-center text-paragraph-3 text-sm sm:text-base">
+              Create your first AI Agent to start automating support, generating
+              leads, and answering customer questions.
+            </p>
+            <Button>Create AI Agent</Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
