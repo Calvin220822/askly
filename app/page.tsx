@@ -1,5 +1,6 @@
-import Header from './components/Header';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Header from '@/components/Header';
 
 export default function Home() {
   return (
@@ -16,7 +17,9 @@ export default function Home() {
               Create your first AI Agent to start automating support, generating
               leads, and answering customer questions.
             </p>
-            <Button>Create AI Agent</Button>
+            <Link href="/create">
+              <Button className="w-full">Create AI Agent</Button>
+            </Link>
           </div>
         </div>
       </div>
