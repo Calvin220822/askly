@@ -21,7 +21,7 @@ export default function FileUpload() {
     if (!file) return;
     setUploading(true);
 
-    // TOOD：需要获取presigined URL
+    // TOOD：需要获取presigined URL, 由后端实现
     // 上传文件到 Supabase 存储桶
     const { data, error } = await supabase.storage
       .from(s3Bucket)
