@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
@@ -21,32 +20,34 @@ export default function FileUpload() {
     if (!file) return;
     setUploading(true);
 
-    // TOOD：需要获取presigined URL, 由后端实现
-    // 上传文件到 Supabase 存储桶
-    const { data, error } = await supabase.storage
-      .from(s3Bucket)
-      .upload(`agentFiles/${file.name}`, file, {
-        cacheControl: '86400', // 缓存 1 天
-        upsert: false, // 文件不覆盖
-      });
+    // fetch presigned URL
+    const res = await fetch('/api/file/presigned_url', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ file_name: file.name, bucket: s3Bucket }),
+    });
+    const data = await res.json();
 
-    if (error) throw error;
+    // upload file to Supabase Storage
+    await fetch(data.upload_url, {
+      method: 'PUT',
+      body: file,
+    });
 
-    // 将文件元数据保存到数据库
-    await fetch('/api/files', {
+    // send metadata to backend
+    await fetch('/api/file/save_metadata', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         user_id: 'userId',
         bucket: s3Bucket,
-        path: data.path,
+        path: data.file_path,
         size: file.size,
-        mime_type: file.type,
+        type: file.type,
       }),
     });
 
     setUploading(false);
-    console.log('File uploaded:', data);
     toast.success('File uploaded successfully!');
   };
 

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 
 export default async function Home() {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/agents`);
+  const data = await fetch('/api/agents');
   const agents = await data.json();
   console.log('agents', agents);
 
