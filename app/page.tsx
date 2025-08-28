@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
+import { apiFetch } from '@/lib/api';
 
 export default async function Home() {
-  const data = await fetch('/api/agents');
+  const data = await apiFetch('/api/agents');
   const agents = await data.json();
-  console.log('agents', agents);
 
   return (
     <div className="font-sans min-h-screen">

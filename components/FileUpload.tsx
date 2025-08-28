@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { apiFetch } from '@/lib/api';
 
 const s3Bucket = process.env.NEXT_PUBLIC_S3_BUCKET || 'agentFiles';
 
@@ -21,21 +22,24 @@ export default function FileUpload() {
     setUploading(true);
 
     // fetch presigned URL
-    const res = await fetch('/api/file/presigned_url', {
+    const res = await apiFetch('/api/file/presigned_url', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ file_name: file.name, bucket: s3Bucket }),
+      body: JSON.stringify({
+        file_name: encodeURIComponent('testname.pdf'),
+        bucket: s3Bucket,
+      }),
     });
     const data = await res.json();
 
     // upload file to Supabase Storage
-    await fetch(data.upload_url, {
+    await apiFetch(data.upload_url, {
       method: 'PUT',
       body: file,
     });
 
     // send metadata to backend
-    await fetch('/api/file/save_metadata', {
+    await apiFetch('/api/file/save_metadata', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
