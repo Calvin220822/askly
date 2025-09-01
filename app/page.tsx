@@ -4,8 +4,11 @@ import Header from '@/components/Header';
 import { apiFetch } from '@/lib/api';
 
 export default async function Home() {
-  const data = await apiFetch('/api/agents');
-  const agents = await data.json();
+  // const data = await apiFetch('/api/agents');
+  // const agents = await data.json();
+  const agents = {
+    data: [],
+  };
 
   return (
     <div className="font-sans min-h-screen">

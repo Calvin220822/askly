@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChevronLeftIcon } from 'lucide-react';
 import { Button } from './ui/button';
+import Userinfo from './Userinfo';
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -35,7 +36,9 @@ export default function Header(props: HeaderProps) {
         />
         <div className="font-bold">Askly</div>
       </div>
-      <div>userinfo</div>
+      <div className="flex items-center">
+        <Userinfo />
+      </div>
     </header>
   );
 }
