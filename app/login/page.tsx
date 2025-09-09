@@ -1,47 +1,26 @@
 'use client';
-import { useActionState } from 'react';
-// import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
-import { Loader2Icon } from 'lucide-react';
-import { login, signup } from './actions';
+import Image from 'next/image';
+import LoginPannel from '@/components/LoginPannel';
 
 export default function LoginPage() {
-  const initialState: any = { error: null };
-  const [state, formAction, isPending] = useActionState(login, initialState);
-
-  const [signupState, signupFormAction, isSigupPending] = useActionState(
-    signup,
-    initialState
-  );
-
   return (
-    <form>
-      <label htmlFor="email">Email:</label>
-      <input id="email" name="email" type="email" required />
-      <br />
-      <label htmlFor="password">Password:</label>
-      <input id="password" name="password" type="password" required />
-      <br />
-      <div>
-        <Button formAction={formAction}>
-          {isPending && <Loader2Icon className="animate-spin" />}
-          Log in
-        </Button>
-        {state.error && (
-          <p className="text-red-500 text-sm mt-2">{state.error}</p>
-        )}
+    <div className="h-screen w-screen overflow-hidden p-3 flex flex-col">
+      <div className="flex items-center gap-3">
+        <Image
+          src="/logo.png"
+          alt="logo"
+          width={24}
+          height={24}
+          className="object-contain"
+        />
+        <div className="font-bold">Askly</div>
       </div>
 
-      <br />
-      <div>
-        <Button formAction={signupFormAction}>
-          {isSigupPending && <Loader2Icon className="animate-spin" />}
-          Sign up
-        </Button>
-        {signupState.error && (
-          <p className="text-red-500 text-sm mt-2">{signupState.error}</p>
-        )}
+      <div className="flex items-center justify-center w-full pt-40">
+        <div className="w-[500px]">
+          <LoginPannel />
+        </div>
       </div>
-    </form>
+    </div>
   );
 }
